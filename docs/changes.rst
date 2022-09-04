@@ -5,23 +5,10 @@ Change log
 ==========
 
 
-macos_oslog 0.5.0.dev1
-----------------------
+macos_oslog 0.5.0
+-----------------
 
-Released: not yet
+Released: 2022-09-04
 
-**Incompatible changes:**
+Initial version
 
-**Deprecations:**
-
-**Bug fixes:**
-
-**Enhancements:**
-
-**Cleanup:**
-
-**Known issues:**
-
-* See `list of open issues`_.
-
-.. _`list of open issues`: https://github.com/andy-maier/macos-oslog/issues

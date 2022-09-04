@@ -25,7 +25,7 @@
 //
 // * "M.N.P.dev1": Development level 1 of a not yet released version M.N.P
 // * "M.N.P": A released version M.N.P
-static const char *__version__ = "0.5.0.dev1";
+static const char *__version__ = "0.5.0";
 
 
 static char macos_oslog_module_docstring[] =
