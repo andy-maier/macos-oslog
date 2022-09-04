@@ -6,7 +6,7 @@
 # Make sure that the minimum versions required in this file are consistent with
 # the minimum versions specified in minimum-constraints.txt.
 
--r test-requirements.txt
+-r requirements.txt
 
 
 # Indirect dependencies that must be handled early:
@@ -17,71 +17,70 @@ importlib-metadata>=1.1.0,<4.3; python_version <= '3.7'
 
 # Direct dependencies:
 
+# PEP517 package builder, used in Makefile
+build>=0.5.0
+
+# virtualenv
+# tox 3.21.0 requires virtualenv!=20.0.[0-7],>=16.0.0 and requires py>=3.5
+# build requires virtualenv.cli_run which was added in 20.1
+# virtualenv 20.0 requires six<2,>=1.12.0
+virtualenv>=20.1.0
+
+# Unit test direct dependencies (e.g. imports into testcases):
+
+# pytest
+# pytest 4.3.1 solves an issue on Python 3 with minimum package levels
+pytest>=4.3.1,!=6.0; python_version >= '3.5' and python_version <= '3.6'
+pytest>=4.4.0,!=6.0; python_version >= '3.7' and python_version <= '3.9'
+pytest>=6.2.5; python_version >= '3.10'
+testfixtures>=6.9.0
+decorator>=4.0.11
+mock>=2.0.0
+yagot>=0.5.0
+# pytz before 2019.1 fails on Python 3.10 because it uses collections.Mapping
+pytz>=2016.10; python_version <= '3.9'
+pytz>=2019.1; python_version >= '3.10'
+
 # Coverage reporting (no imports, invoked via coveralls script):
-# We exclude Python 3.4 from coverage testing and reporting.
-# coverage 5.0 has removed support for py34
-coverage>=5.0; python_version == '2.7' or python_version >= '3.5'
-pytest-cov>=2.7.0; python_version == '2.7' or python_version >= '3.5'
-# coveralls 2.0 has removed support for Python 2.7 and 3.4
-git+https://github.com/andy-maier/coveralls-python.git@andy/add-py27#egg=coveralls; python_version == '2.7'
+coverage>=5.0
+pytest-cov>=2.7.0
 # TODO: Remove coveralls pinning to <3.0.0 once fixed (TheKevJames/coveralls-python#252)
-coveralls>=2.1.2,<3.0.0; python_version >= '3.5'
+coveralls>=2.1.2,<3.0.0
 
 # Safety CI by pyup.io
-# safety 1.9.0 removed support for Python 2.7 and 3.4 (and now also enforces that)
-safety>=1.8.7,<1.9.0; python_version <= '3.4'
-safety>=1.9.0; python_version >= '3.5'
-# dparse 0.5.0 has an infinite recursion issue on Python 2.7,
-#   see https://github.com/pyupio/dparse/issues/46
-# Pip 19.1.1 does not recognize that dparse 0.5.0 has dropped support for Python 3.4
-dparse>=0.4.1,<0.5.0; python_version == '2.7'
-dparse>=0.4.1,<0.5.0; python_version == '3.4'
-dparse>=0.5.1; python_version >= '3.5'
+safety>=1.9.0
+dparse>=0.5.1
 
 # PyYAML is pulled in by dparse and python-coveralls
-# PyYAML 5.3 has removed support for Python 3.4
-# PyYAML 5.3 fixed narrow build error on Python 2.7
 # PyYAML 5.3.1 addressed issue 38100 reported by safety
 # PyYAML 5.2 addressed issue 38639 reported by safety
-PyYAML>=5.3.1; python_version == '2.7'
-PyYAML>=5.2,<5.3; python_version == '3.4'
-PyYAML>=5.3.1; python_version > '3.4'
+PyYAML>=5.3.1
 
 # Tox
 # tox 3.17 requires six>=1.14.0 - covered in test-requirements.txt
 # tox 3.14 requires importlib-metadata<1,>=0.12 on py<3.8
 # tox 3.21 requires importlib-metadata>=0.12 on py<3.8
-# tox 3.15 removed support for Python 3.4
-tox>=3.14.0; python_version <= '3.4'
-tox>=3.21.0; python_version >= '3.5'
+tox>=3.21.0
 
 # Sphinx (no imports, invoked via sphinx-build script):
 # Keep in sync with rtd-requirements.txt
 
-# Sphinx 2.0.0 removed support for Python 2.7 and 3.4
 # Sphinx 4.0.0 breaks autodocsumm and needs to be excluded
 # Sphinx <4.2.0 fails on Python 3.10 because it tries to import non-existing
 #   types.Union. This also drives docutils>=0.14.
 # Sphinx pins docutils to <0.18 (some versions even to <0.17) but the package
 #   version resolver in the pip version used on py27 ignores package dependencies
-Sphinx>=1.7.6,<2.0.0; python_version <= '3.4'
 Sphinx>=3.5.4,!=4.0.0; python_version >= '3.5' and python_version <= '3.9'
 Sphinx>=4.2.0; python_version >= '3.10'
-docutils>=0.13.1,<0.17; python_version == '2.7'
-docutils>=0.13.1; python_version >= '3.4' and python_version <= '3.9'
+docutils>=0.13.1; python_version >= '3.5' and python_version <= '3.9'
 docutils>=0.14; python_version >= '3.10'
 sphinx-git>=10.1.1
 GitPython>=2.1.1
 sphinxcontrib-fulltoc>=1.2.0
 sphinxcontrib-websupport>=1.1.2
-# Pygments 2.4.0 has removed support for Python 3.4
-Pygments>=2.1.3; python_version == '2.7'
-Pygments>=2.1.3,<2.4.0; python_version == '3.4'
 Pygments>=2.5.1; python_version >= '3.5'
 sphinx-rtd-theme>=0.5.0
 # autodocsumm before 0.2.5 fails on Python 3.10 with TypeError
-autodocsumm>=0.1.13,<0.2.0; python_version == '2.7'
-autodocsumm>=0.1.13,<0.2.0; python_version == '3.4'
 autodocsumm>=0.1.13; python_version >= '3.5' and python_version <= '3.9'
 autodocsumm>=0.2.5; python_version >= '3.10'
 # Babel 2.7.0 fixes an ImportError for MutableMapping which starts failing on Python 3.10
@@ -99,20 +98,12 @@ Babel>=2.7.0
 #   Working around this by not installing pylint/astroid on py35.
 #   TODO: If lazy-object-proxy releases a correctly pinned 1.4.x version, this workaround
 #         can be removed again.
-pylint>=1.6.4,<2.0.0; python_version == '2.7'
-pylint>=2.2.2,<2.4; python_version == '3.4'
 pylint>=2.4.4; python_version >= '3.6'
-astroid>=1.4.9,<2.0.0; python_version == '2.7'
-astroid>=2.1.0,<2.3; python_version == '3.4'
 astroid>=2.3.3; python_version >= '3.6'
 # typed-ast is used by astroid on py34..py37
-# typed-ast 1.4.0 removed support for Python 3.4.
-typed-ast>=1.3.0,<1.4.0; python_version == '3.4' and implementation_name=='cpython'
 typed-ast>=1.4.0,<1.5.0; python_version >= '3.6' and python_version < '3.8' and implementation_name=='cpython'
 # Workaround: lazy-object-proxy is used by astroid, and lazy-object-proxy 1.5.0
 #   dropped support for py34 but declared it as supported
-lazy-object-proxy>=1.4.3; python_version == '2.7'
-lazy-object-proxy>=1.4.3,<1.5.0; python_version == '3.4'
 lazy-object-proxy>=1.4.3; python_version >= '3.6'
 
 # Flake8 and dependents (no imports, invoked via flake8 script):
@@ -120,58 +111,22 @@ lazy-object-proxy>=1.4.3; python_version >= '3.6'
 # well with its pinned dependencies, so we need to repeat these for py34.
 # flake8 4.0.0 fixes an AttributeError on Python 3.10.
 # flake8 5.0.4 requires importlib-metadata>=1.1.0,<4.3 on py<3.8
-flake8>=3.8.0; python_version == '2.7'
-flake8>=3.8.0,<3.9.0; python_version == '3.4'
 flake8>=3.8.0; python_version >= '3.5' and python_version <= '3.9'
 flake8>=4.0.0; python_version >= '3.10'
-mccabe>=0.6.0; python_version == '2.7'
-mccabe>=0.6.0,<0.7.0; python_version == '3.4'
 mccabe>=0.6.0; python_version >= '3.5'
-pycodestyle>=2.6.0,<2.8.0; python_version == '2.7'
-pycodestyle>=2.6.0a1,<2.7.0; python_version == '3.4'
 pycodestyle>=2.6.0; python_version >= '3.5' and python_version <= '3.9'
 pycodestyle>=2.8.0; python_version >= '3.10'
-pyflakes>=2.2.0,<2.4.0; python_version == '2.7'
-pyflakes>=2.2.0,<2.3.0; python_version == '3.4'
 pyflakes>=2.2.0; python_version >= '3.5' and python_version <= '3.9'
 pyflakes>=2.4.0; python_version >= '3.10'
 entrypoints>=0.3.0
-functools32>=3.2.3.post2; python_version == '2.7'  # technically: python_version < '3.2'
 
 # Twine (no imports, invoked via twine script):
 # twine 2.0.0 removed support for Python < 3.6
-twine>=1.8.1,<2.0.0; python_version <= '3.5'
+twine>=1.8.1,<2.0.0; python_version == '3.5'
 twine>=3.0.0; python_version >= '3.6'
-# readme-renderer 25.0 has removed support for Python 3.4
 # readme-renderer 23.0 has made cmarkgfm part of extras (it fails on Cygwin)
 # readme-renderer 25.0 or higher is needed to address issue on Windows with py39
-readme-renderer>=23.0; python_version == '2.7'
-readme-renderer>=23.0,<25.0; python_version == '3.4'
-readme-renderer>=25.0; python_version >= '3.5'
-
-# Jupyter Notebook (no imports, invoked via jupyter script):
-# The jupyter package is not installed on Python 3.4 on Windows, because its
-# (indirectly) dependent pywin32 package is not available on Pypi for
-# Python 3.4.
-jupyter>=1.0.0; python_version != '3.4' or sys_platform != 'win32'
-ipython>=5.1.0,<6.0; python_version == '2.7'
-ipython>=6.0,<7.0; python_version == '3.4' and sys_platform != 'win32'
-ipython>=7.0,<7.10; python_version == '3.5'
-ipython>=7.10; python_version >= '3.6'
-ipykernel>=4.5.2; python_version != '3.4' or sys_platform != 'win32'
-ipython_genutils>=0.1.0; python_version != '3.4' or sys_platform != 'win32'
-ipywidgets>=5.2.2; python_version != '3.4' or sys_platform != 'win32'
-jupyter_console>=5.0.0,<6.0.0; python_version == '2.7'
-jupyter_console>=5.0.0,<6.0.0; python_version == '3.4' and sys_platform != 'win32'
-jupyter_console>=6.0.0; python_version >= '3.5'
-jupyter_client>=4.4.0; python_version != '3.4' or sys_platform != 'win32'
-jupyter_core>=4.2.1; python_version != '3.4' or sys_platform != 'win32'
-nbconvert>=5.0.0; python_version != '3.4' or sys_platform != 'win32'
-nbformat>=4.2.0; python_version != '3.4' or sys_platform != 'win32'
-notebook>=4.3.1; python_version != '3.4' or sys_platform != 'win32'
-pyrsistent>=0.14.0,<0.16.0; python_version == '2.7'
-pyrsistent>=0.14.0,<0.15.0; python_version == '3.4' and sys_platform != 'win32'
-pyrsistent>=0.14.0; python_version >= '3.5'
+readme-renderer>=25.0
 
 # Performance profiling tools
 pyinstrument>=3.0.1
@@ -179,8 +134,7 @@ pyinstrument>=3.0.1
 # Package dependency management tools (not used by any make rules)
 pipdeptree>=2.0.0
 # pip-check-reqs 2.3.2 solves issues with newer pip versions
-pip-check-reqs>=2.0.4,<2.1.1; python_version == '2.7'
-pip-check-reqs>=2.3.2; python_version >= '3.4'
+pip-check-reqs>=2.3.2
 
 
 # Indirect dependencies with special constraints:
@@ -189,39 +143,27 @@ pip-check-reqs>=2.3.2; python_version >= '3.4'
 pytz>=2016.10
 
 # colorama (used by tox, pytest)
-# colorama 0.4.0 removed support for Python 3.4
-# tox 3.21.0 depends on colorama>=0.4.1 for platform_system == "Windows"
-colorama>=0.3.9,<0.4.0; python_version <= '3.4'
-colorama>=0.4.1; python_version >= '3.5'
+colorama>=0.4.1
 
-# Pywin32 is used (at least?) by jupyter.
-# There is no version of pywin32 for py34.
-# Pywin32 version 222 is inconsistent in its 32-bit/64-bit support on py37
-# Pywin32 version 226 needs to be excluded, see issues #1946 and #1975.
-# Issue #2675: Pywin32 version 225+ provides wheel files for py38, but does not
-#   advertise py38 on Pypi. That causes pywin32==225 to fail but pywin32>=225
-#   to work.
-#   Reported to pywin32 as https://github.com/mhammond/pywin32/issues/1448.
-#   Addressed by increasing the minimum version of pywin32 to >=227 on Python >=3.8.
-# TODO: To circumvent https://github.com/pypa/pip/issues/10701, we exclude
-#       py3.10. Remove the circumvention once fixed.
-pywin32>=222,!=226; sys_platform == 'win32' and python_version == '2.7'
-pywin32>=222,!=226; sys_platform == 'win32' and python_version >= '3.5' and python_version <= '3.6'
-pywin32>=223,!=226; sys_platform == 'win32' and python_version == '3.7'
-pywin32>=227; sys_platform == 'win32' and python_version >= '3.8' and python_version != '3.10'
+# packaging (used by pytest)
+packaging>=19.0
 
-# The tornado package is used by ipykernel which is used by jupyter.
-# Tornado 5.0.0 and 5.0.1 rejects installation if the Python ssl module
-# does not have certain symbols required by Tornado. This issue exists for
-# example with Python 2.7.6 on Ubuntu 14.04, but not with Python 2.7.5 on
-# RHEL 7.4. This can be checked with:
-#   python -c "import ssl; ssl.SSLContext; ssl.create_default_context; ssl.match_hostname"
-# Other projects have the same issue:
-#   https://github.com/floydhub/dl-docker/issues/84
-# The following is a circumvention of this issue that nails the tornado
-# version to below 5.0 on Python 2.
-# TODO: Follow up on resolution of this issue.
-tornado>=4.0,<5.0; python_version <= '2.7'
-tornado>=5.0; python_version >= '3.5'
+# pluggy (used by pytest, tox)
+# Pluggy 0.12.0 has a bug causing pytest plugins to fail loading on py38
+# pytest 4.3.1 depends on pluggy>=0.7
+# tox 3.21.0 depends on pluggy>=0.12.0
+pluggy>=0.13.1
+
+# six (used by virtualenv, tox, probably others)
+# virtualenv 20.0 requires six>=1.12.0 on py>=3.8
+# tox 3.17 requires six>=1.14.0
+# six 1.16.0 removes the ImportWarning raised by Python 3.10
+six>=1.14.0; python_version <= '3.9'
+six>=1.16.0; python_version >= '3.10'
+
+# FormEncode is used for xml comparisons in unit test
+# FormEncode 1.3.1 has no python_requires and fails install on Python 3.10 due to incorrect version checking
+FormEncode>=1.3.1; python_version <= '3.9'
+FormEncode>=2.0.0; python_version >= '3.10'
 
 # Additional indirect dependencies are not specified in this file.
