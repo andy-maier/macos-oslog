@@ -309,7 +309,7 @@ static PyObject *macos_oslog_os_log_release(PyObject *self, PyObject *args, PyOb
         snprintf(buf, sizeof(buf),
                  "macos_oslog.os_log_release() argument 1 must be "
                  "macos_oslog.Log, not %s",
-                 _PyType_Name(Py_TYPE(py_log)));
+                 Py_TYPE(py_log)->tp_name);
         PyErr_SetString(PyExc_TypeError, buf);
         return NULL;
     }
@@ -371,7 +371,7 @@ static PyObject *macos_oslog_os_log_enabled(PyObject *self, PyObject *args, PyOb
         snprintf(buf, sizeof(buf),
                  "macos_oslog.os_log_enabled() argument 1 must be "
                  "macos_oslog.Log, not %s",
-                 _PyType_Name(Py_TYPE(py_log)));
+                 Py_TYPE(py_log)->tp_name);
         PyErr_SetString(PyExc_TypeError, buf);
         return NULL;
     }
@@ -446,7 +446,7 @@ static PyObject *macos_oslog_os_log(PyObject *self, PyObject *args, PyObject *kw
         snprintf(buf, sizeof(buf),
                  "macos_oslog.os_log() argument 1 must be "
                  "macos_oslog.Log, not %s",
-                 _PyType_Name(Py_TYPE(py_log)));
+                 Py_TYPE(py_log)->tp_name);
         PyErr_SetString(PyExc_TypeError, buf);
         return NULL;
     }
