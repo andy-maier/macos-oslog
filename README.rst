@@ -42,17 +42,17 @@ This will also install any prerequisite Python packages.
 For more details and alternative ways to install, see
 `Installation`_.
 
-.. _Installation: https://macos-oslog.readthedocs.io/en/stable/intro.html#installation
+.. _Installation: https://andy-maier.github.io/macos-oslog/intro.html#installation
 
 Documentation
 -------------
 
-* `Documentation for latest released version <https://macos-oslog.readthedocs.io/en/stable/>`_
+* `Documentation for latest released version <https://andy-maier.github.io/macos-oslog/>`_
 
 Change History
 --------------
 
-* `Change history for latest released version <https://macos-oslog.readthedocs.io/en/stable/changes.html>`_
+* `Change history for latest released version <https://andy-maier.github.io/macos-oslog/changes.html>`_
 
 Quick Start
 -----------
@@ -83,7 +83,7 @@ Contributing
 
 For information on how to contribute to the
 macos-oslog project, see
-`Contributing <https://macos-oslog.readthedocs.io/en/stable/development.html#contributing>`_.
+`Contributing <https://andy-maier.github.io/macos-oslog/development.html#contributing>`_.
 
 
 License
