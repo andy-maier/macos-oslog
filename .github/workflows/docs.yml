@@ -26,7 +26,7 @@ env:
   doc_build_cmd: make builddoc
 
   # Directory where the documentation is built in main worktree
-  doc_build_dir: docs_build
+  doc_build_dir: build_doc
 
   # Branch that is checked out for building the docs.
   # We always build from master even when a stable branch has triggered the
