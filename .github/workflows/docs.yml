@@ -1,7 +1,9 @@
 # This GitHub workflow will build the documentation and publish it on GitHub Pages.
+#
 # How to start using this workflow:
 # * Create, push and merge a PR with these changes:
 #   - Put this file into /.github/workflows/
+#   - Create an empty file /.nojekyll
 #   - Create a file /.gh-pages-exclude with the following content:
 #       # rsync exclude patterns for the documentation build. For details on the syntax,
 #       # see https://linuxize.com/post/how-to-exclude-files-and-directories-with-rsync/
