@@ -246,7 +246,6 @@ dist_included_files := \
     README.rst \
     INSTALL.md \
     requirements.txt \
-    test-requirements.txt \
     setup.py \
 
 .PHONY: help
@@ -262,7 +261,7 @@ help:
 	@echo "  pylint     - Run PyLint on Python sources"
 	@echo "  test       - Run unit tests"
 	@echo "  all        - Do all of the above"
-	@echo "  upload     - build + upload the distribution archive files to PyPI"
+	@echo "  upload     - build + upload the package to PyPI"
 	@echo "  clean      - Remove any temporary files"
 	@echo "  clobber    - Remove everything created to ensure clean start"
 	@echo "  pip_list   - Display the installed Python packages as seen by make"
@@ -350,7 +349,7 @@ install_reqs_$(python_mn_version).done: Makefile install_basic_$(python_mn_versi
 	echo "done" >$@
 	@echo "Makefile: Done installing Python installation prerequisites"
 
-develop_reqs_$(python_mn_version).done: install_basic_$(python_mn_version).done dev-requirements.txt test-requirements.txt
+develop_reqs_$(python_mn_version).done: install_basic_$(python_mn_version).done dev-requirements.txt
 	@echo "Makefile: Installing development requirements (with PACKAGE_LEVEL=$(PACKAGE_LEVEL))"
 	-$(call RM_FUNC,$@)
 	$(PIP_CMD_MOD) $(pip_opts) install $(pip_level_opts) -r dev-requirements.txt

@@ -14,7 +14,7 @@ macos-oslog is supported in these environments:
 
 * Operating Systems: macOS 10.12 and higher
 
-* Python: 2.7, 3.4, and higher
+* Python: 3.5 and higher
 
 
 .. _`Installing`:

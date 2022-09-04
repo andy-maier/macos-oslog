@@ -29,13 +29,13 @@ jobs:
         if [[ "${{ github.event_name }}" == "schedule" || "${{ github.head_ref }}" =~ ^release_ ]]; then \
           echo "::set-output name=matrix::{ \
             \"os\": [ \"macos-latest\" ], \
-            \"python-version\": [ \"2.7\", \"3.5\", \"3.6\", \"3.7\", \"3.8\", \"3.9\", \"3.10\" ], \
+            \"python-version\": [ \"3.5\", \"3.6\", \"3.7\", \"3.8\", \"3.9\", \"3.10\" ], \
             \"package_level\": [ \"minimum\", \"latest\" ] \
           }"; \
         else \
           echo "::set-output name=matrix::{ \
             \"os\": [ \"macos-latest\" ], \
-            \"python-version\": [ \"2.7\", \"3.10\" ], \
+            \"python-version\": [ \"3.5\", \"3.8\", \"3.10\" ], \
             \"package_level\": [ \"minimum\", \"latest\" ] \
           }"; \
         fi
@@ -129,11 +129,6 @@ jobs:
         COVERALLS_FLAG_NAME: "${{ matrix.os }},${{ matrix.python-version }},${{ matrix.package_level }}"
       run: |
         if ! [[ ${{ matrix.python-version }} =~ (3.4) ]]; then coveralls; fi
-    - name: Run installtest
-      env:
-        PACKAGE_LEVEL: ${{ matrix.package_level }}
-      run: |
-        make installtest
 
   test_finish:
     needs: test
