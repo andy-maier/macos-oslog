@@ -1,21 +1,21 @@
 macos-oslog - Python bindings for the unified logging and tracing system of macOS
 =================================================================================
 
-.. image:: https://badge.fury.io/py/macos_oslog.svg
-    :target: https://pypi.python.org/pypi/macos_oslog/
+.. image:: https://badge.fury.io/py/macos-oslog.svg
+    :target: https://pypi.python.org/pypi/macos-oslog/
     :alt: Version on Pypi
 
 .. image:: https://github.com/andy-maier/macos-oslog/workflows/test/badge.svg?branch=master
     :target: https://github.com/andy-maier/macos-oslog/actions/
-    :alt: Actions status
+    :alt: Test status (master)
 
-.. image:: https://readthedocs.org/projects/macos_oslog/badge/?version=latest
-    :target: https://readthedocs.org/projects/macos_oslog/builds/
+.. image:: https://github.com/andy-maier/macos-oslog/workflows/docs/badge.svg?branch=master
+    :target: https://github.com/andy-maier/macos-oslog/actions?query=workflow%3Adocs
     :alt: Docs build status (master)
 
-.. image:: https://coveralls.io/repos/github/andy-maier/macos-oslog/badge.svg?branch=master
-    :target: https://coveralls.io/github/andy-maier/macos-oslog?branch=master
-    :alt: Test coverage (master)
+.. # .. image:: https://coveralls.io/repos/github/andy-maier/macos-oslog/badge.svg?branch=master
+.. #     :target: https://coveralls.io/github/andy-maier/macos-oslog?branch=master
+.. #     :alt: Test coverage (master)
 
 
 Overview
