@@ -96,7 +96,7 @@ setuptools.setup(
     url='https://github.com/andy-maier/macos-oslog',
     project_urls={
         'Bug Tracker': 'https://github.com/andy-maier/macos-oslog/issues',
-        'Documentation': 'https://pypi.python.org/pypi/macos-oslog/',
+        'Documentation': 'https://andy-maier.github.io/macos-oslog/html/docs/',
         'Source Code': 'https://github.com/andy-maier/macos-oslog',
     },
 

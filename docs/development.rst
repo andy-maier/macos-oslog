@@ -64,8 +64,8 @@ Setting up the development environment
 Building the documentation
 --------------------------
 
-The GitHub pages site of the repo is used to publish the documentation for the
-project package at https://andy-maier.github.io/macos-oslog/
+The GitHub pages site of the repo is used to publish the documentation at
+https://andy-maier.github.io/macos-oslog/html/docs/ .
 
 This page is automatically updated whenever the Git repo for this package
 changes the branch from which this documentation is built.
