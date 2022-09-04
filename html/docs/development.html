@@ -142,8 +142,8 @@ target does.</p>
 </section>
 <section id="building-the-documentation">
 <span id="id4"></span><h2><span class="section-number">3.3. </span>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this heading"></a></h2>
-<p>The ReadTheDocs (RTD) site is used to publish the documentation for the
-project package at <a class="reference external" href="https://macos-oslog.readthedocs.io/">https://macos-oslog.readthedocs.io/</a></p>
+<p>The GitHub pages site of the repo is used to publish the documentation for the
+project package at <a class="reference external" href="https://andy-maier.github.io/macos-oslog/">https://andy-maier.github.io/macos-oslog/</a></p>
 <p>This page is automatically updated whenever the Git repo for this package
 changes the branch from which this documentation is built.</p>
 <p>In order to build the documentation locally from the Git work directory,
@@ -387,17 +387,6 @@ git checkout <span class="si">${</span><span class="nv">BRANCH</span><span class
 it. This will cause it to appear in the Release tab.</p>
 <p>You can see the tags in GitHub via Code -&gt; Releases -&gt; Tags.</p>
 </li>
-<li><p>On ReadTheDocs, activate the new version <code class="docutils literal notranslate"><span class="pre">M.N.U</span></code>:</p>
-<ul>
-<li><p>Go to <a class="reference external" href="https://readthedocs.org/projects/macos_oslog/versions/">https://readthedocs.org/projects/macos_oslog/versions/</a>
-and log in.</p></li>
-<li><p>Activate the new version <code class="docutils literal notranslate"><span class="pre">M.N.U</span></code>.</p>
-<p>This triggers a build of that version. Verify that the build succeeds
-and that new version is shown in the version selection popup at
-<a class="reference external" href="https://macos-oslog.readthedocs.io/">https://macos-oslog.readthedocs.io/</a></p>
-</li>
-</ul>
-</li>
 <li><p>Upload the package to PyPI:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make upload
 </pre></div>
@@ -406,7 +395,7 @@ and that new version is shown in the version selection popup at
 <p><strong>Attention!</strong> This only works once for each version. You cannot release
 the same version twice to PyPI.</p>
 <p>Verify that the released version arrived on PyPI at
-<a class="reference external" href="https://pypi.python.org/pypi/macos_oslog/">https://pypi.python.org/pypi/macos_oslog/</a></p>
+<a class="reference external" href="https://pypi.python.org/pypi/macos-oslog/">https://pypi.python.org/pypi/macos-oslog/</a></p>
 </li>
 </ol>
 </section>

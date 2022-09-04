@@ -64,8 +64,8 @@ Setting up the development environment
 Building the documentation
 --------------------------
 
-The ReadTheDocs (RTD) site is used to publish the documentation for the
-project package at https://macos-oslog.readthedocs.io/
+The GitHub pages site of the repo is used to publish the documentation for the
+project package at https://andy-maier.github.io/macos-oslog/
 
 This page is automatically updated whenever the Git repo for this package
 changes the branch from which this documentation is built.
@@ -369,18 +369,7 @@ Git repo.
 
     You can see the tags in GitHub via Code -> Releases -> Tags.
 
-13. On ReadTheDocs, activate the new version ``M.N.U``:
-
-    * Go to https://readthedocs.org/projects/macos_oslog/versions/
-      and log in.
-
-    * Activate the new version ``M.N.U``.
-
-      This triggers a build of that version. Verify that the build succeeds
-      and that new version is shown in the version selection popup at
-      https://macos-oslog.readthedocs.io/
-
-14. Upload the package to PyPI:
+13. Upload the package to PyPI:
 
     .. code-block:: sh
 
@@ -392,7 +381,7 @@ Git repo.
     the same version twice to PyPI.
 
     Verify that the released version arrived on PyPI at
-    https://pypi.python.org/pypi/macos_oslog/
+    https://pypi.python.org/pypi/macos-oslog/
 
 
 Starting a new version
