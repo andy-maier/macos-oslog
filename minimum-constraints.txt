@@ -148,7 +148,7 @@ Babel==2.7.0
 pylint==2.4.4; python_version >= '3.6'
 astroid==2.3.3; python_version >= '3.6'
 # typed-ast is used by astroid on py34..py37
-typed-ast==1.4.0; python_version >= '3.6' and python_version < '3.8' and implementation_name=='cpython'
+typed-ast==1.4.0; python_version >= '3.6' and python_version <= '3.7' and implementation_name=='cpython'
 # Workaround: lazy-object-proxy is used by astroid
 lazy-object-proxy==1.4.3; python_version >= '3.6'
 
