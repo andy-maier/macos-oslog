@@ -35,7 +35,7 @@ jobs:
         else \
           echo "::set-output name=matrix::{ \
             \"os\": [ \"macos-latest\" ], \
-            \"python-version\": [ \"3.5\", \"3.8\", \"3.10\" ], \
+            \"python-version\": [ \"3.5\", \"3.6\", \"3.10\" ], \
             \"package_level\": [ \"minimum\", \"latest\" ] \
           }"; \
         fi
