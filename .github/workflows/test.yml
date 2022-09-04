@@ -1,0 +1,150 @@
+# This GitHub workflow will setup and run various kinds of tests with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: test
+
+on:
+  schedule:
+    # The schedule event always (and only) runs on the master branch.
+    - # cron (in UTC): minute hour day_of_month month day_of_week
+      cron: '00 03 * * SUN'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  set_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select_matrix.outputs.matrix }}
+    steps:
+    - name: "Select matrix"
+      id: select_matrix
+      # Select full matrix when scheduled or when releasing, and normal matrix
+      # otherwise. The matrix is defined as a JSON string.
+      # TODO: Find a way to define this with less escapes.
+      run: |
+        if [[ "${{ github.event_name }}" == "schedule" || "${{ github.head_ref }}" =~ ^release_ ]]; then \
+          echo "::set-output name=matrix::{ \
+            \"os\": [ \"macos-latest\" ], \
+            \"python-version\": [ \"2.7\", \"3.5\", \"3.6\", \"3.7\", \"3.8\", \"3.9\", \"3.10\" ], \
+            \"package_level\": [ \"minimum\", \"latest\" ] \
+          }"; \
+        else \
+          echo "::set-output name=matrix::{ \
+            \"os\": [ \"macos-latest\" ], \
+            \"python-version\": [ \"2.7\", \"3.10\" ], \
+            \"package_level\": [ \"minimum\", \"latest\" ] \
+          }"; \
+        fi
+    - name: Show matrix in JSON
+      run: echo '${{ steps.select_matrix.outputs.matrix }}'
+
+  test:
+    needs: set_matrix
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJson(needs.set_matrix.outputs.matrix) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Display initial Python packages
+      run: |
+        echo "Installed Python packages:"
+        pip list
+    - name: Display platform and env vars
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make platform env
+    - name: Install the package and its dependents
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make install
+    - name: Show installed package versions
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        echo "Installed Python packages:"
+        pip list
+    - name: Development setup
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make develop
+    - name: Show installed package versions
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        echo "Installed Python packages:"
+        pip list
+    - name: Show package dependency tree
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        echo "Package dependency tree of installed Python packages:"
+        pipdeptree --all
+    - name: Run build
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make build
+    - name: Run builddoc
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make builddoc
+    - name: Run check
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make check
+    - name: Run pylint
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make pylint
+    - name: Run test
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+        # TESTCASES: a value for pytest -k
+      run: |
+        make test
+    - name: Send coverage result to coveralls.io
+      shell: bash -l {0}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
+        COVERALLS_FLAG_NAME: "${{ matrix.os }},${{ matrix.python-version }},${{ matrix.package_level }}"
+      run: |
+        if ! [[ ${{ matrix.python-version }} =~ (3.4) ]]; then coveralls; fi
+    - name: Run installtest
+      env:
+        PACKAGE_LEVEL: ${{ matrix.package_level }}
+      run: |
+        make installtest
+
+  test_finish:
+    needs: test
+    runs-on: ubuntu-latest
+    container: python:3-slim
+    steps:
+    - name: Install coveralls
+      run: |
+        pip3 install --upgrade coveralls
+    - name: Send coverage finish to coveralls.io
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        coveralls --finish
